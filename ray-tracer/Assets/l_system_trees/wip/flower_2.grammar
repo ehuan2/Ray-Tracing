@@ -1,0 +1,7 @@
+F
+
+trunk F 0.1 1.0 0.1
+branch ( ) 0 0 -22.5
+branch [ ] 0 0 22.5
+
+F 1.0 F F ( ( F [ F [ F ] ] ) [ [ F ( F ( F ) ) ] ] )

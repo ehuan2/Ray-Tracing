@@ -1,0 +1,9 @@
+F
+
+trunk F 0.1 1 0.1
+branch ( ) 0 0 -10
+branch [ ] 0 0 10
+
+F 0.33 F ( F ) F [ F ] F
+F 0.33 F ( F ) F
+F 0.34 F [ F ] F

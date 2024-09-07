@@ -1,0 +1,10 @@
+A
+
+trunk A 0.8 2 0.8
+trunk B 0.4 1.5 0.4
+trunk C 0.3 1 0.3
+branch ( ) 0 0 45
+branch [ ] 0 0 -45
+
+A 1.0 A C ( C B )
+B 0.3 B A [ C A B ]

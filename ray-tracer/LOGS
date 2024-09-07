@@ -1,0 +1,221 @@
+## Daily Log of Graphics Final Project
+----------------------------------------------------------------------------------------------------
+Day #16: December 5th 2023
+BUILT THE FINAL SCENE LET'S GOOOOOOOOO. IT LOOKS SO GOOOD OH MY GOD I WANT TO CRY NOW.
+
+----------------------------------------------------------------------------------------------------
+Day #15: December 4th 2023
+Got sick so I couldn't work for a couple of days, not great, but not terrible! Honestly I'm at
+a pretty decent place right now, just have to create my final scene + the temple left, I finished
+complex CSG!
+
+----------------------------------------------------------------------------------------------------
+Day #14: December 1st 2023
+Think I know a fix to the complex csg that I want to try out... hope it works!
+
+----------------------------------------------------------------------------------------------------
+Day #13: November 30th 2023
+Managed to get most of the Complex CSG done! There are some edge cases where the simple one
+actually doesn't work though... trying to figure that out now.
+
+----------------------------------------------------------------------------------------------------
+Day #12: November 29th 2023
+Working on getting the union of line segments + primitives done.
+
+----------------------------------------------------------------------------------------------------
+Day #11: November 28th 2023
+Finally starting on CSG! Man I am behind... only one week left, really need to start grinding
+harder I think. Might actually stay at graphics lab a few nights this week...
+
+To start, let's just do simple CSG, as this should be easy I think. Hopefully...
+
+I also work on getting the model of the temple done!
+Managed to write the lua commands, just need to do the actual primitive segment returns
+as well as the union of line segments, etc.
+
+----------------------------------------------------------------------------------------------------
+Day #10: November 27th 2023
+FINALLY FINISHED (ish) the L-System Trees! Managed to get a big chunk of what I wanted done.
+And it looks not too shabby! Need to work on texture mapping next though.
+
+My final (hopefully) lua command will look like this:
+gr.tree (
+    name, grammar_fname, decay_rate, depth,
+    <geom-node-of-trunk>, <geom-node-of-leaf>
+)
+
+where the geom-node-of-trunk and geom-node-of-leaf will also store the necessary
+textures and such for the leaves and trunks.
+
+And we also edited our parser to parse in:
+<leaf> <symbol> <x-scale> <y-scale> <z-scale>
+as well for the geometric interpretation section.
+
+----------------------------------------------------------------------------------------------------
+Day #9: November 26th 2023 RENDER RAVEEE
+Alright, we'll start out the day by rewriting our tree-making grammar! We need to parse it as such:
+<start-symbol>
+
+<trunk> <symbol> <x-scale> <y-scale> <z-scale>
+<branch> <left-bracket> <right-bracket> <x-rotate> <y-rotate> <z-rotate>
+
+<symbol> <probability> <list-of-symbols>
+
+The lua command will then look like this:
+gr.tree( name, grammar_fname, decay_rate, depth  )
+where the grammar_fname is the name of the file of the grammar we'll use, decay_rate
+is how much we want it to shrink as it goes along, and depth is how many times we'll subdivide
+
+----------------------------------------------------------------------------------------------------
+Day #8/9: November 25/26th 2023 RENDER RAVEEE
+TIME TO WORK ON LSYSTEM TREES! Starting out with adding a new command, gr.tree().
+
+I realized I probably need to parse in grammars and then expand on them.
+
+A specification on grammars:
+<start-symbol>
+<non-terminal-symbol> <grammar-rule> (symbols are separated by spaces, including parentheses)
+
+The way that we shall structure these grammars are as a sort of mapping from one to another
+as nodes. Just your basic map is all :).
+
+Edit: I just realized that we should define the probabilities here! We'll add that in now :)
+So it'll look like something like this:
+A
+A 0.6 B A B
+A 0.4 A B A
+
+Finally, I also realize that for the branches to look best, it's probably better to have
+a cylinder primitive. I will implement that really quickly right now...
+
+Finished the cylinder primitive! Wow I move a lot faster now, that was so easy to do :)
+
+Something else we want to add however will be the uv mapping s.t. we can texture map to it!
+Time to look into cylindrical mapping :). Wow that took me longer than it should've... It's 4am
+now... I am dying LOL.
+
+imma take a nap and come back to work and finish on L-system trees
+
+GOOD MORNING! 9:00 AM let's gooooo.
+----------------------------------------------------------------------------------------------------
+Day #7: November 24th 2023
+Falling a bit behind schedule... I managed to get fractal mountains to look a lot better!
+I think my issue was splitting into 7 different faces, but actually splitting into 6 different
+faces and ignoring the bottom split makes it look so so so much better.
+
+I'm going to spend the rest of my time to work on L-system trees.
+
+I GOT AN AMAZING IDEA! So something I can do is actually make l-system trees a new type of node.
+This new type of node will just actually be a SceneNode that has a tree like structure to
+combine different primitives (in our case cubes) together to create the tree. This way it's a lot
+more space and time efficient than having a tree that's made up of a million polygons, it's a lot
+less by using number of cubes. In fact it'll be 12 times less the effort.
+
+However, I think I should still in fact give it a bounding box.
+
+Okay so, I finished the day by restructuring a lot of the code... but I am so behind.
+Okay so, for my restructure, I needed to do a few things:
+1. I needed to move my OptIntersect from my primitive, and move my bounding box out as well
+so that I can have the geometry node own a bounding box.
+2. Since my LSystemTree is now a geometry node, I can have my LSystemTree have its own bounding
+box which I can then define based off of the structure of my tree.
+
+I probably need to do an overhaul of my primitive section because it's quite a mess right now...
+
+----------------------------------------------------------------------------------------------------
+Day #6: November 23rd 2023
+I got some of the mountain stuff to start working better... But I ran into a couple of issues:
+1. Multithreading is not working as well as I had hoped it would. This is because I don't split
+up the chunks nice enough - I will have to repartition things more evenly...
+
+I managed to fix multithreading! And there are significant improvements from 4 1/2 minutes before
+to just 38 seconds on a large fractal mountain.
+
+----------------------------------------------------------------------------------------------------
+Day #5: November 22nd 2023
+Okay okay okay I got bump mapping to somewhat work! It looks a bit off, like shadows
+are not necessarily created the best, and I did need to update the bumps lua command.
+I update the bump lua command to now be gr.node:mesh_add_bumps({u, v}, num_period, period)
+where it stops producing waves after num_period...
+
+Managed to get waves!! Working on fractal mountains next...
+
+For fractal mountains, I want to define first its length, width, and height. Length representing
+the z direction of how long it is, width representing the x direction, for how wide it is and
+height is the y direction of how tall we want it to eventually be.
+
+We create a new command gr.fractal_mountain( 'name', {width, height, length}, roughness, depth )
+for it.
+
+----------------------------------------------------------------------------------------------------
+Day #4: November 21st 2023
+Okay okay okay... Let's get to work! I got texture mapping working, today will be normal bumping 
+and multithreading! Update: Finished multithreading! It got the sample.lua file from A4 down from
+100 seconds down to 29 seconds, pretty good!
+
+Working on normal bumping next! I need to first work on adding a new Lua command. I think
+the effect that I want is essentially not just random normal bumping, but rather to also control
+the normal bumping through sine waves, that we can control the decay over as well. This will
+help me to create more realistic waves.
+
+The way we'll define this is when we define a mesh, we'll have the ability to add a Bumping struct
+which we'll later be able to modify when we want.
+
+Then, we have the lua command to be:
+gr.node:mesh_add_bumps({u, v}, {d^2, d}, period) where period is the period we want the bumping
+to occur at, d^2, d is the decay we want and u, v are the coordinates or origin of the bumping
+that we want.
+
+----------------------------------------------------------------------------------------------------
+Day #3: November 20th 2023
+Haven't worked on this for five days... Yikes! Time to do a lot today. Will have to get texture
+mapping done as well as multithreading I think...
+
+Texture Mapping: Started out with getting the lua command to work, as the following:
+    node:mesh_add_texture(<fname>)
+where we require node to be a geometry node that contains a mesh.
+
+Managed to finish texture mapping! Didn't have time for multithreading unfortunately...
+Something I did have to learn - our .obj files need to change themselves to better map the textures
+This way we can define things as a weighted sum of the separate coord. vectors, and interpolate
+in between...
+
+----------------------------------------------------------------------------------------------------
+Day #2: November 15th 2023
+Today I will be working on reflections! First off, I need to add a new lua command to make it so 
+that we can add which surfaces to be reflective. I think the best thing to do is have a double
+on our phong material that can determine whether it's between [0.0, 1.0) (enforce it to be
+less than completely reflective).
+
+FINISHED REFLECTIONS! Struggled a little bit because I couldn't easily find the reflective
+direction, but I decided to just say screw it and found a way through the beautiful stanford
+course notes I found that provided a very easy way to calculate the direction. The direction is
+quite easy - I was just messing up because I messed up 3d and 2d spaces.
+
+----------------------------------------------------------------------------------------------------
+Day #1: November 14th 2023
+Starting a bit late, but better late than never. Today's goal is to rewrite everything
+in such a way to make the file structure a bit cleaner than it was before.
+
+To start off with, I will change the file structure.
+
+To do that, we need to consider what files are tightly coupled and which ones are separate.
+
+Some obvious ones come to mind, with Parent child relationships (SceneNode, GeometryNode, JointNode)
+as well as Primitive and Mesh and PhongMaterial and Material.
+
+A generic tool directory is also nice to have to be able to only depend on itself, for functions
+such as polyroots, some printing or some other compiler directives we'll call in a single place.
+
+I also renamed quite a few of them to make more sense, like A4 to render (because it generates the
+image itself) as well as separated A4 into its own data structure to be able to add on and remove
+more functionality a lot more easily.
+
+Then, I created a new common folder for a lot of the data structures which can be self-contained
+i.e. they don't depend on others, like Light.hpp and Ray.hpp.
+
+Now the only things that are in our original folder is scene_lua.(hpp/cpp) and Main.cpp and
+lua488.hpp.
+
+I also created a new file in tools called directives, so we can define compiler directives
+all in one place instead of across different files.

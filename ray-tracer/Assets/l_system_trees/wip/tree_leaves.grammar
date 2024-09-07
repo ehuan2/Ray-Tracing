@@ -1,0 +1,11 @@
+A
+
+trunk A 0.1 1 0.1
+trunk B 0.1 1 0.1
+leaf leaves 0.05 0.05 0.05
+branch ( ) 0 0 -45
+branch [ ] 0 0 45
+
+A 1.0 A ( leaves ) [ leaves ] B A
+B 1.0 B A
+leaves 1.0 leaves

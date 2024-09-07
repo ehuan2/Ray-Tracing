@@ -1,0 +1,6 @@
+ray-tracer/build/*
+build/*
+lib/*
+ray-tracer/Ray-Tracer
+Makefile
+ray-tracer/Makefile

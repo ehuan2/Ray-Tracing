@@ -1,0 +1,13 @@
+F
+
+trunk F 0.1 1.0 0.1
+leaf leaves 0.25 0.25 0.25
+branch ( ) 0 0 -22.5
+branch [ ] 0 0 22.5
+branch { } 0 0 45
+branch < > 0 0 -45
+
+F 1.0 F F ( ( F { leaves } < leaves > [ F { leaves } < leaves > [ F { leaves } < leaves > ] ] ) [ [ F { leaves } < leaves > ( F { leaves } < leaves > ( F { leaves } < leaves > ) ) ] ] )
+leaves 0.5 leaves
+leaves 0.15 { leaves } leaves
+leaves 0.15 < leaves > leaves
