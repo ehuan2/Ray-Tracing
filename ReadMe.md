@@ -9,10 +9,20 @@ The ray tracer uses lua as a scene descriptor. More information on the project a
 ```
 premake5 gmake
 ```
-followed by `make`.
+followed by running 
+```
+make
+```
+
 3. Then go under `ray-tracer` to build the final ray tracer. Run
 ```
 premake5 gmake
 ```
-followed by `make`. The resulting binary `Ray-Tracer` is the ray tracer.
+followed by running 
+```
+make
+```
+
+The resulting binary `Ray-Tracer` is the ray tracer.
+
 4. Render a specific lua file scene by looking at examples under `Assets`. More information on different lua commands and the scene descriptors can be found in the [report](https://drive.google.com/drive/u/0/folders/1Y_tYlbzSwEBm77zSKQuGIzMGtRGNHbfX).
